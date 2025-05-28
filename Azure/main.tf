@@ -7,8 +7,12 @@ provider "azurerm" {
 
 // Configure Terraform backend (for production, use Azure Storage)
 terraform {
-  backend "local" {
-    path = "terraform.tfstate"
+  backend "azurerm" {
+    # These values must be provided via command line or environment variables
+    # resource_group_name  = "rg-terraform-state"
+    # storage_account_name = "terraformstate12345"
+    # container_name       = "tfstate"
+    # key                  = "azure-infra.tfstate"
   }
   
   required_providers {
@@ -24,6 +28,16 @@ resource "azurerm_resource_group" "main" {
   name     = var.resource_group_name
   location = var.location
   tags     = var.tags
+}
+
+// Storage for Remote State
+module "storage" {
+  source              = "./modules/storage"
+  storage_account_name = var.storage_account_name
+  container_name      = var.container_name
+  resource_group_name = azurerm_resource_group.main.name
+  location            = var.location
+  tags                = var.tags
 }
 
 // Import modules

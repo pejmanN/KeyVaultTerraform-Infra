@@ -13,6 +13,19 @@ output "location" {
   value = var.location
 }
 
+// Storage outputs for remote state
+output "storage_account_name" {
+  value = module.storage.storage_account_name
+}
+
+output "storage_container_name" {
+  value = module.storage.container_name
+}
+
+output "storage_account_id" {
+  value = module.storage.storage_account_id
+}
+
 // Network outputs
 output "vnet_id" {
   value = module.network.vnet_id

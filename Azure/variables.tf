@@ -19,6 +19,17 @@ variable "tags" {
   }
 }
 
+// Storage variables for remote state
+variable "storage_account_name" {
+  description = "Name of the storage account for Terraform state"
+  default     = "tfstate12345" // Must be globally unique
+}
+
+variable "container_name" {
+  description = "Name of the blob container for Terraform state"
+  default     = "tfstate"
+}
+
 // Network variables
 variable "vnet_name" {
   description = "Name of the virtual network"
